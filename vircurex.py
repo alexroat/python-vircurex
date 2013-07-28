@@ -19,11 +19,11 @@ class Vircurex:
 		print params
 		t = time.strftime("%Y-%m-%dT%H:%M:%S",time.gmtime())#UTC time
 		txid=hashlib.sha256("%s-%f"%(t,random.randint(0,1<<31))).hexdigest();#unique trasmission ID using random hash
-		#calcolo token
+		#token computation
 		vp=map(lambda x:x[1],params)
 		token_input="%s;%s;%s;%s;%s;%s"%(secret,user,t,txid,command,';'.join(map(str,vp)))
 		token=hashlib.sha256(token_input).hexdigest()
-		#costruzione richiesta
+		#cbuilding request
 		reqp=(("account",user),("id",txid),("token",token),("timestamp",t))+params
 		url="%s/api/%s.json?%s"%(Vircurex.domain,command,urllib.urlencode(reqp))#url
 		data=urllib.urlopen(url).read()
@@ -32,7 +32,7 @@ class Vircurex:
 	def __init__(self,user,secrets={}):
 		self.user=user
 		self.secrets=secrets
-	#trade
+	#trade API
 	def get_balance(self,currency):
 		return Vircurex.secureRequest(self.user,self.secrets["get_balance"],"get_balance",("currency",currency))
 	def get_balances(self):
@@ -53,7 +53,7 @@ class Vircurex:
 		return Vircurex.secureRequest(self.user,self.secrets["create_coupon"],"create_coupon",("amount",amount),("currency",currency))
 	def redeem_coupon(self,coupon):
 		return Vircurex.secureRequest(self.user,self.secrets["redeem_coupon"],"redeem_coupon",("coupon",coupon))
-	##info
+	##info API
 	def get_lowest_ask(self,base,alt):
 		return Vircurex.simpleRequest("get_lowest_ask",("base",base),("alt",alt))
 	def get_highest_bid(self,base,alt):
