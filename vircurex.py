@@ -5,6 +5,7 @@ import hashlib
 import random
 
 
+
 class Vircurex:
   domain="https://vircurex.com"#domain
 	@staticmethod
