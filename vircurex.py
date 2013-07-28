@@ -17,7 +17,6 @@ class Vircurex:
 	@staticmethod
 	def secureRequest(user,secret,command,*params):
 		global domain
-		print params
 		t = time.strftime("%Y-%m-%dT%H:%M:%S",time.gmtime())#UTC time
 		txid=hashlib.sha256("%s-%f"%(t,random.randint(0,1<<31))).hexdigest();#unique trasmission ID using random hash
 		#token computation
