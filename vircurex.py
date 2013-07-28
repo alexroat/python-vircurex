@@ -21,8 +21,8 @@ class Vircurex:
 		t = time.strftime("%Y-%m-%dT%H:%M:%S",time.gmtime())#UTC time
 		txid=hashlib.sha256("%s-%f"%(t,random.randint(0,1<<31))).hexdigest();#unique trasmission ID using random hash
 		#token computation
-		vp=map(lambda x:x[1],params)
-		token_input="%s;%s;%s;%s;%s;%s"%(secret,user,t,txid,command,';'.join(map(str,vp)))
+		vp=[command]+map(lambda x:x[1],params)
+		token_input="%s;%s;%s;%s;%s"%(secret,user,t,txid,';'.join(map(str,vp)))
 		token=hashlib.sha256(token_input).hexdigest()
 		#cbuilding request
 		reqp=(("account",user),("id",txid),("token",token),("timestamp",t))+params
