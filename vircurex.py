@@ -7,13 +7,13 @@ import random
 
 
 class Vircurex:
-  domain="https://vircurex.com"#domain
+	domain="https://vircurex.com"#domain
 	@staticmethod
 	def simpleRequest(command,*params):
 		global domain
 		url="%s/api/%s.json?%s"%(Vircurex.domain,command,urllib.urlencode(params))#url
 		data=urllib.urlopen(url).read()
-		return json.loads(data)
+	return json.loads(data)
 	@staticmethod
 	def secureRequest(user,secret,command,*params):
 		global domain
