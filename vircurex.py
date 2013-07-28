@@ -13,7 +13,7 @@ class Vircurex:
 		global domain
 		url="%s/api/%s.json?%s"%(Vircurex.domain,command,urllib.urlencode(params))#url
 		data=urllib.urlopen(url).read()
-	return json.loads(data)
+		return json.loads(data)
 	@staticmethod
 	def secureRequest(user,secret,command,*params):
 		global domain
@@ -30,7 +30,7 @@ class Vircurex:
 		data=urllib.urlopen(url).read()
 		return json.loads(data)
 	#insert user and a dict with secrets set in your account settings (e.g. : create_order=>q12we34r5t)
-	def __init__(self,user,secrets={}):
+	def __init__(self,user=None,secrets={}):
 		self.user=user
 		self.secrets=secrets
 	#trade API
