@@ -41,8 +41,8 @@ class Vircurex:
 		return Vircurex.secureRequest(self.user,self.secrets["create_order"],"create_order",["ordertype","amount","currency1","unitprice","currency2"],ordertype=ordertype,amount=amount,currency1=currency1,unitprice=unitprice,currency2=currency2)
 	def release_order(self,orderid):
 		return Vircurex.secureRequest(self.user,self.secrets["release_order"],"release_order",["orderid"],orderid=orderid)		
-	def delete_order(self,orderid):
-		return Vircurex.secureRequest(self.user,self.secrets["delete_order"],"delete_order",["orderid"],orderid=orderid)
+	def delete_order(self,orderid,otype):
+		return Vircurex.secureRequest(self.user,self.secrets["delete_order"],"delete_order",["orderid","otype"],orderid=orderid,otype=otype)
 	def read_order(self,orderid,otype):
 		return Vircurex.secureRequest(self.user,self.secrets["read_order"],"read_order",["orderid"],orderid=orderid,otype=otype)
 	def read_orders(self,otype):
