@@ -1,17 +1,20 @@
 import time
 import json
 import urllib
+import urllib2
 import hashlib
 import random
 
 
 
 class Vircurex(object):
-	domain="https://vircurex.com"#domain
+	domain="https://api.vircurex.com"#domain
 	@classmethod
 	def simpleRequest(cls, command,**params):
 		url="%s/api/%s.json?%s"%(cls.domain,command,urllib.urlencode(params.items()))#url
-		data=urllib.urlopen(url).read()
+		opener=urllib2.build_opener()
+		opener.addheaders = [("User-agent", "Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1")]
+		data=opener.open(url).read()
 		return json.loads(data)
 	@classmethod
 	def secureRequest(cls, user,secret,command,tokenparams,**params):
