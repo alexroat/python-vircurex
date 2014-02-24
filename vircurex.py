@@ -6,17 +6,15 @@ import random
 
 
 
-class Vircurex:
+class Vircurex(object):
 	domain="https://vircurex.com"#domain
-	@staticmethod
-	def simpleRequest(command,**params):
-		global domain
-		url="%s/api/%s.json?%s"%(Vircurex.domain,command,urllib.urlencode(params.items()))#url
+	@classmethod
+	def simpleRequest(cls, command,**params):
+		url="%s/api/%s.json?%s"%(cls.domain,command,urllib.urlencode(params.items()))#url
 		data=urllib.urlopen(url).read()
 		return json.loads(data)
-	@staticmethod
-	def secureRequest(user,secret,command,tokenparams,**params):
-		global domain
+	@classmethod
+	def secureRequest(cls, user,secret,command,tokenparams,**params):
 		t = time.strftime("%Y-%m-%dT%H:%M:%S",time.gmtime())#UTC time
 		txid=hashlib.sha256("%s-%f"%(t,random.randint(0,1<<31))).hexdigest();#unique trasmission ID using random hash
 		#token computation
@@ -25,13 +23,16 @@ class Vircurex:
 		token=hashlib.sha256(token_input).hexdigest()
 		#cbuilding request
 		reqp=[("account",user),("id",txid),("token",token),("timestamp",t)]+params.items()
-		url="%s/api/%s.json?%s"%(Vircurex.domain,command,urllib.urlencode(reqp))#url
+		url="%s/api/%s.json?%s"%(cls.domain,command,urllib.urlencode(reqp))#url
 		data=urllib.urlopen(url).read()
 		return json.loads(data)
 	#insert user and a dict with secrets set in your account settings (e.g. : create_order=>q12we34r5t)
-	def __init__(self,user=None,secrets={}):
+	def __init__(self,user=None,secrets=None):
 		self.user=user
-		self.secrets=secrets
+		if secrets is None:
+				self._secrets={}
+		else:
+				self.secrets=secrets
 	#trade API
 	def get_balance(self,currency):
 		return Vircurex.secureRequest(self.user,self.secrets["get_balance"],"get_balance",["currency"],currency=currency)
